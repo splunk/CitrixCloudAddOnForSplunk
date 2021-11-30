@@ -28,6 +28,8 @@ To install the add-on, you must meet the following requirements
 -------------
 * If CVAD data will be collected, [site names and IDs](https://developer.cloud.com/citrixworkspace/virtual-apps-and-desktops/cvad-rest-apis/docs/how-to-get-site-id) will be required
 
+## Tutorial Videos Can be Found [here](https://www.youtube.com/watch?v=oTA_Aorx3Zc&list=PL3UuMYMvn66UaqX_BzYVN7R0vcfT9pruK)
+
 =============
 # Configure
 -------------
