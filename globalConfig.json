@@ -1,0 +1,636 @@
+{
+    "meta": {
+        "name": "TA-citrixcloud",
+        "displayName": "Splunk Add-On for Citrix Cloud Data Collection",
+        "version": "0.1.0",
+        "restRoot": "TA_citrixcloud",
+        "apiVersion": "3.2.0",
+        "schemaVersion": "0.0.3"
+    },
+    "pages": {
+        "configuration": {
+            "title": "Configuration",
+            "description": "Set up your add-on",
+            "tabs": [
+                {
+                    "name": "account",
+                    "title": "Account Details",
+                    "table": {
+                        "header": [
+                            {
+                                "field": "name",
+                                "label": "Authentication Name"
+                            }
+                        ],
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "field": "name",
+                            "label": "Name",
+                            "help": "Account name",
+                            "required": true,
+                            "defaultValue": "Default value",
+                            "validators": []
+                        },
+                        {
+                            "field": "customerid",
+                            "label": "Customer ID",
+                            "type": "text",
+                            "required": true,
+                            "help": "Enter customer ID",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of customer ID should be between 1 and 8192 characters"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "clientid",
+                            "label": "Client ID",
+                            "type": "text",
+                            "required": true,
+                            "help": "Enter client ID",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of client ID should be between 1 and 8192 characters"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "clientsecret",
+                            "label": "Client Secret",
+                            "type": "text",
+                            "required": true,
+                            "help": "Enter client secret",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Length of client secret should be between 1 and 8192 characters"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "singleSelect",
+                            "field": "authtype",
+                            "label": "Authentication Flow Type",
+                            "help": "Choose between trust service or oauth flows",
+                            "required": true,
+                            "defaultValue": "OAuth",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "oauth",
+                                        "label": "OAuth"
+                                    },
+                                    {
+                                        "value": "trust",
+                                        "label": "Trust Service"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "sites",
+                    "title": "Site Details",
+                    "table": {
+                        "header": [
+                            {
+                                "field": "name",
+                                "label": "Site Name"
+                            },
+                            {
+                                "field": "siteid",
+                                "label": "Site ID"
+                            }
+                        ],
+                        "actions": [
+                            "edit",
+                            "delete",
+                            "clone"
+                        ]
+                    },
+                    "entity": [
+                        {
+                            "type": "text",
+                            "field": "name",
+                            "label": "Name",
+                            "help": "Site friendly name",
+                            "required": true,
+                            "defaultValue": "",
+                            "validators": []
+                        },
+                        {
+                            "field": "siteid",
+                            "label": "Citrix Site ID",
+                            "type": "text",
+                            "required": true,
+                            "defaultValue": "",
+                            "help": "https://developer.cloud.com/citrixworkspace/virtual-apps-and-desktops/cvad-rest-apis/docs/how-to-get-site-id",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "name": "logging",
+                    "title": "Logging",
+                    "entity": [
+                        {
+                            "field": "loglevel",
+                            "label": "Log level",
+                            "type": "singleSelect",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "label": "DEBUG",
+                                        "value": "DEBUG"
+                                    },
+                                    {
+                                        "label": "INFO",
+                                        "value": "INFO"
+                                    },
+                                    {
+                                        "label": "WARNING",
+                                        "value": "WARNING"
+                                    },
+                                    {
+                                        "label": "ERROR",
+                                        "value": "ERROR"
+                                    },
+                                    {
+                                        "label": "CRITICAL",
+                                        "value": "CRITICAL"
+                                    }
+                                ]
+                            },
+                            "defaultValue": "INFO"
+                        }
+                    ]
+                },
+                {
+                    "name": "proxy",
+                    "title": "Proxy",
+                    "entity": [
+                        {
+                            "field": "proxy_enabled",
+                            "label": "Enable",
+                            "type": "checkbox"
+                        },
+                        {
+                            "field": "proxy_url",
+                            "label": "Host",
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 4096,
+                                    "errorMsg": "Max host length is 4096"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "proxy_port",
+                            "label": "Port",
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "field": "proxy_username",
+                            "label": "Username",
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 50,
+                                    "errorMsg": "Max length of username is 50"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "proxy_password",
+                            "label": "Password",
+                            "type": "text",
+                            "encrypted": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of password is 8192"
+                                }
+                            ]
+                        }
+                    ],
+                    "options": {
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                    }
+                }
+            ]
+        },
+        "inputs": {
+            "title": "Inputs",
+            "description": "Manage your data inputs",
+            "table": {
+                "header": [
+                    {
+                        "field": "name",
+                        "label": "Name"
+                    },
+                    {
+                        "field": "interval",
+                        "label": "Interval"
+                    },
+                    {
+                        "field": "index",
+                        "label": "Index"
+                    },
+                    {
+                        "field": "disabled",
+                        "label": "Status"
+                    }
+                ],
+                "moreInfo": [
+                    {
+                        "field": "name",
+                        "label": "Name"
+                    },
+                    {
+                        "field": "type",
+                        "label": "type"
+                    },
+                    {
+                        "field": "interval",
+                        "label": "Interval"
+                    },
+                    {
+                        "field": "index",
+                        "label": "Index"
+                    },
+                    {
+                        "field": "disabled",
+                        "label": "Status"
+                    },
+                    {
+                        "field": "start_time",
+                        "label": "Start Time"
+                    },
+                    {
+                        "field": "global_account",
+                        "label": "Global Account"
+                    },
+                    {
+                        "field": "category",
+                        "label": "Category"
+                    }
+                ],
+                "actions": [
+                    "edit",
+                    "enable",
+                    "delete",
+                    "clone"
+                ]
+            },
+            "services": [
+                {
+                    "name": "systemlog",
+                    "title": "System Log Input",
+                    "entity": [
+                        {
+                            "field": "name",
+                            "label": "Name",
+                            "type": "text",
+                            "help": "Enter a unique name for the data input",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "interval",
+                            "label": "Interval",
+                            "type": "text",
+                            "required": true,
+                            "help": "Time interval of input in seconds.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                    "errorMsg": "Interval must be an integer."
+                                }
+                            ]
+                        },
+                        {
+                            "field": "index",
+                            "label": "Index",
+                            "type": "singleSelect",
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "createSearchChoice": true,
+                                "denyList": "^_.*$"
+                            },
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "field": "account",
+                            "label": "Account",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "account"
+                            }
+                        },
+                        {
+                            "type": "text",
+                            "field": "from_start_date",
+                            "label": "From Start Date",
+                            "help": "This is the date from which data will begin collection",
+                            "required": false,
+                            "defaultValue": "",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^((?:[0-9]{2})?[0-9]{2})-((1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9]))$",
+                                    "errorMsg": "Must match format YYYY-MM-DD"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "cvad_configlogs",
+                    "title": "CVAD Config Logs",
+                    "entity": [
+                        {
+                            "field": "name",
+                            "label": "Name",
+                            "type": "text",
+                            "help": "Enter a unique name for the data input",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "account",
+                            "label": "Account",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "account"
+                            }
+                        },
+                        {
+                            "field": "site",
+                            "label": "Site",
+                            "help": "Site to query",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "sites"
+                            }
+                        },
+                        {
+                            "field": "interval",
+                            "label": "Interval",
+                            "type": "singleSelect",
+                            "required": true,
+                            "help": "Frequency of data collection (limited to API features)",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "60",
+                                        "label": "Last Minute"
+                                    },
+                                    {
+                                        "value": "300",
+                                        "label": "Last 5 Minutes"
+                                    },
+                                    {
+                                        "value": "1800",
+                                        "label": "Last 30 Minutes"
+                                    },
+                                    {
+                                        "value": "3600",
+                                        "label": "Last Hour"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "field": "index",
+                            "label": "Index",
+                            "type": "singleSelect",
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "createSearchChoice": true,
+                                "denyList": "^_.*$"
+                            },
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "cvad_operational",
+                    "title": "CVAD Operational",
+                    "entity": [
+                        {
+                            "field": "name",
+                            "label": "Name",
+                            "type": "text",
+                            "help": "Enter a unique name for the data input",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "account",
+                            "label": "Account",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "account"
+                            }
+                        },
+                        {
+                            "field": "site",
+                            "label": "Site",
+                            "help": "Site to query",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "sites"
+                            }
+                        },
+                        {
+                            "type": "multipleSelect",
+                            "field": "endpoints",
+                            "label": "API Endpoints",
+                            "help": "Select the API endpoint to be included",
+                            "required": true,
+                            "defaultValue": "",
+                            "options": {
+                                "delimiter": "|",
+                                "items": [
+                                    {
+                                        "value": "Admin/Administrators",
+                                        "label": "Administrators"
+                                    },
+                                    {
+                                        "value": "ApplicationGroups",
+                                        "label": "ApplicationGroups"
+                                    },
+                                    {
+                                        "value": "Applications",
+                                        "label": "Applications"
+                                    },
+                                    {
+                                        "value": "DeliveryGroups",
+                                        "label": "DeliveryGroups"
+                                    },
+                                    {
+                                        "value": "Hypervisors",
+                                        "label": "Hypervisors"
+                                    },
+                                    {
+                                        "value": "MachineCatalogs",
+                                        "label": "MachineCatalogs"
+                                    },
+                                    {
+                                        "value": "Machines",
+                                        "label": "Machines"
+                                    },
+                                    {
+                                        "value": "Sessions",
+                                        "label": "Sessions"
+                                    },
+                                    {
+                                        "value": "Sites/{}",
+                                        "label": "Sites"
+                                    },
+                                    {
+                                        "value": "Zones",
+                                        "label": "Zones"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "field": "interval",
+                            "label": "Interval",
+                            "type": "text",
+                            "required": true,
+                            "help": "Time interval of input in seconds.",
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                    "errorMsg": "Interval must be an integer."
+                                }
+                            ]
+                        },
+                        {
+                            "field": "index",
+                            "label": "Index",
+                            "type": "singleSelect",
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "createSearchChoice": true,
+                                "denyList": "^_.*$"
+                            },
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
