@@ -1,16 +1,16 @@
-# Splunk Add-On For Citrix Cloud
+# Citrix Cloud Add-on for Splunk
 
-This is the Splunk UCC framework package for the Splunk Add-On For Citrix Cloud.  It's not intended to be used directly in splunk.  You must build this source into a Splunk app using the [ucc-gen](https://github.com/splunk/addonfactory-ucc-generator) command.
+This is the Splunk UCC framework package for the Citrix Cloud Add-on for Splunk.  It's not intended to be used directly in splunk.  You must build this source into a Splunk app using the [ucc-gen](https://github.com/splunk/addonfactory-ucc-generator) command.
 
 ==========
 # Overview
 ----------
-## Splunk Add-On For Citrix Cloud
+## Citrix Cloud Add-on for Splunk
 * Version: 0.1.0
 * Vendor Products: Citrix Cloud
 * Visible In Splunk Web: Yes, for configuration of Inputs
 
-Splunk Add-On For Citrix Cloud is a connector that allows Splunk administrators to collect various categories of data from the Citrix Cloud platform.  The data is then sent to Splunk for further analysis and processing.
+Citrix Cloud Add-on for Splunk is a connector that allows Splunk administrators to collect various categories of data from the Citrix Cloud platform.  The data is then sent to Splunk for further analysis and processing.
 
 ## Hardware And Software requirements
 To install the add-on, you must meet the following requirements
@@ -33,7 +33,7 @@ To install the add-on, you must meet the following requirements
 =============
 # Configure
 -------------
-## Configure Splunk Add-On For Citrix Cloud
+## Configure Citrix Cloud Add-on for Splunk
 
 ### Account Details
 Add one or more Citrix Cloud accounts.  These will typically be one account per cloud environment, or one account per secure client as needed.
@@ -58,7 +58,7 @@ Proxy is supported.  http/https/socks5 with username and password are supported
 ===========
 # Inputs
 -----------
-The Splunk Add-on For Citrix Cloud supports three distinct types of data collection
+The Citrix Cloud Add-on for Splunk supports three distinct types of data collection
 
 ## Citrix System Log
 This is the Citrix Cloud Platform System Logs.  Customers previously could have used the [Citrix published TA](https://splunkbase.splunk.com/app/5496/) for this data. The collection has been included here as well. 

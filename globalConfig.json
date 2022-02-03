@@ -1,8 +1,8 @@
 {
     "meta": {
         "name": "TA-citrixcloud",
-        "displayName": "Citrix Cloud Add-On for Splunk",
-        "version": "0.1.0",
+        "displayName": "Citrix Cloud Add-on for Splunk",
+        "version": "0.1.1",
         "restRoot": "TA_citrixcloud",
         "apiVersion": "3.2.0",
         "schemaVersion": "0.0.3"
