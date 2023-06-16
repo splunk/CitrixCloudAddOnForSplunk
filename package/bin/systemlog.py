@@ -60,6 +60,7 @@ def get_proxy_details(session_key, logger):
         return proxy_details
     except Exception as e:
         logger.error("Failed to fetch proxy details from configuration.")
+        logger.error(e)
         sys.exit(1)
 
 def get_proxy_param(proxyDetails):
@@ -77,13 +78,14 @@ def get_proxy_param(proxyDetails):
                 if useSocks:
                     return {"https": "socks5://{}:{}@{}:{}".format(proxyUsername, proxyPassword, proxyUrl, proxyPort)}
                 else:
-                    return {"https": "https://{}:{}".format(proxyUrl, proxyPort)}
+                    return {"https": "{}:{}".format(proxyUrl, proxyPort)}
             else:
                 return None
         else:
             return None
     except Exception as e:
         logger.error("Failed to get proxy parameters.")
+        logger.error(e)        
         sys.exit(1)
 
 def get_account_details(session_key, account_name, logger):
@@ -168,6 +170,7 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
         return token
     except Exception as e:
         logger.error("Failed to get auth token.")
+        logger.error(e)        
         sys.exit(1)
 
 
