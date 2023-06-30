@@ -6,7 +6,7 @@ This is the Splunk UCC framework package for the Citrix Cloud Add-on for Splunk.
 # Overview
 ----------
 ## Citrix Cloud Add-on for Splunk
-* Version: 1.0.4
+* Version: 1.0.5
 * Vendor Products: Citrix Cloud
 * Visible In Splunk Web: Yes, for configuration of Inputs
 
@@ -86,6 +86,21 @@ This input will collect the operational run-time configuration of various compon
 * API Endpoints: a multi-select list of CVAD details that wil be collected as part of the input.  Note: it's probable that you will have multiple CVAD operational inputs configured for each site as the various endpoints generally require different collection intervals.  For instance, you may only need machine catalog and application metadata collected once an hour, but session data collected every 30 seconds.  This depends on your reporting requirements.  In this case you would have 2 distinct inputs configured, each with the appropriate API Endpoint and interval.
 * Interval: the amount of time in seconds between gathering of data.
 * Index: the target index for the operational data
+
+==========
+# Changelog
+----------
+# 1.0.0
+  * Initial Release
+# 1.0.1
+  * Include proper libraries for scripts
+# 1.0.4
+  * Enhance logging verbosity
+# 1.0.5
+  * Fix url pagination - [#4](https://github.com/splunk/CitrixCloudAddOnForSplunk/issues/4)
+
+
+
 
 > Copyright 2021 Splunk Inc.
 >

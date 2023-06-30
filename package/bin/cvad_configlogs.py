@@ -201,7 +201,7 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token,
         getRecordsUrl = "https://api.cloud.com/cvad/manage/ConfigLog/Operations?searchDateOption={}".format(i)
         
         if continuationToken != None:
-            getRecordsUrl = "{}&ContinuationToken={}".format(getRecordsUrl, continuationToken)
+            getRecordsUrl = "{}?ContinuationToken={}".format(getRecordsUrl, continuationToken)
 
         getRecordsAuth = "CwsAuth Bearer={}".format(token)
 
