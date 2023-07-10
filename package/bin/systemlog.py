@@ -182,7 +182,7 @@ def get_new_records(logger, ew, inputItems, customerid, lastCheckPoint, token, p
         getRecordsUrl = "https://api-us.cloud.com/systemlog/records?StartDateTime={}".format(lastCheckPoint)
         
         if continuationToken != None:
-            getRecordsUrl = "{}?ContinuationToken={}".format(getRecordsUrl, continuationToken)
+            getRecordsUrl = "{}&ContinuationToken={}".format(getRecordsUrl, continuationToken)
 
         getRecordsAuth = "CwsAuth Bearer={}".format(token)
 
