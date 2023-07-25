@@ -193,10 +193,11 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token,
     continuationToken = None
 
     while True:
-        if interval==60: i = "LastMinute"
-        if interval==300: i = "Last5Minutes"
-        if interval==1800: i = "Last30Minutes"
-        if interval==3600: i = "LastHour"
+        # if interval==60: i = "LastMinute"
+        # if interval==300: i = "Last5Minutes"
+        # if interval==1800: i = "Last30Minutes"
+        # if interval==3600: i = "LastHour"
+        i = "Today"
         
         getRecordsUrl = "https://api.cloud.com/cvad/manage/ConfigLog/Operations?searchDateOption={}".format(i)
         

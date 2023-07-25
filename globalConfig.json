@@ -2,7 +2,7 @@
     "meta": {
         "name": "TA-citrixcloud",
         "displayName": "Citrix Cloud Add-on for Splunk",
-        "version": "1.0.5",
+        "version": "0.0.0R07095d9",
         "restRoot": "TA_citrixcloud",
         "apiVersion": "3.2.0",
         "schemaVersion": "0.0.3"
@@ -457,20 +457,8 @@
                                 "disableSearch": true,
                                 "autoCompleteFields": [
                                     {
-                                        "value": "60",
-                                        "label": "Last Minute"
-                                    },
-                                    {
-                                        "value": "300",
-                                        "label": "Last 5 Minutes"
-                                    },
-                                    {
-                                        "value": "1800",
-                                        "label": "Last 30 Minutes"
-                                    },
-                                    {
-                                        "value": "3600",
-                                        "label": "Last Hour"
+                                        "value": "86400",
+                                        "label": "Today"
                                     }
                                 ]
                             }
