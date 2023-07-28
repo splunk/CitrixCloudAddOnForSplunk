@@ -189,7 +189,8 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
         sys.exit(1)
 
 
-def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam):
+#def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam):
+def get_new_records(logger, ew, inputItems, customerid, siteId, token, proxyParam):    
     continuationToken = None
 
     while True:
@@ -327,11 +328,12 @@ class CVAD_CONFIGLOGS(smi.Script):
         proxyParam = get_proxy_param(proxyDetails)
 
         # get the collection interval to pass to the API
-        interval = int(inputItems.get("interval"))
+        # interval = int(inputItems.get("interval"))
 
         token = get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam)
 
-        get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam)
+        #get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam)
+        get_new_records(logger, ew, inputItems, customerid, siteId, token, proxyParam)
 
 
 
