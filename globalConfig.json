@@ -2,7 +2,7 @@
     "meta": {
         "name": "TA-citrixcloud",
         "displayName": "Citrix Cloud Add-on for Splunk",
-        "version": "0.0.0R07095d9",
+        "version": "1.0.6",
         "restRoot": "TA_citrixcloud",
         "apiVersion": "3.2.0",
         "schemaVersion": "0.0.3"
@@ -347,14 +347,8 @@
                             "label": "Interval",
                             "type": "text",
                             "required": true,
-                            "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "help": "Time interval of input in seconds or cron.",
+                            "validators": []
                         },
                         {
                             "field": "index",
@@ -450,18 +444,10 @@
                         {
                             "field": "interval",
                             "label": "Interval",
-                            "type": "singleSelect",
+                            "type": "text",
                             "required": true,
-                            "help": "Frequency of data collection (limited to API features)",
-                            "options": {
-                                "disableSearch": true,
-                                "autoCompleteFields": [
-                                    {
-                                        "value": "86400",
-                                        "label": "Today"
-                                    }
-                                ]
-                            }
+                            "help": "Time interval of input in seconds or cron.",
+                            "validators": []
                         },
                         {
                             "field": "index",
@@ -587,14 +573,8 @@
                             "label": "Interval",
                             "type": "text",
                             "required": true,
-                            "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "help": "Time interval of input in seconds or cron.",
+                            "validators": []
                         },
                         {
                             "field": "index",

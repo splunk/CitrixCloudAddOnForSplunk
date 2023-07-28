@@ -6,7 +6,7 @@ This is the Splunk UCC framework package for the Citrix Cloud Add-on for Splunk.
 # Overview
 ----------
 ## Citrix Cloud Add-on for Splunk
-* Version: 1.0.5
+* Version: 1.0.6
 * Vendor Products: Citrix Cloud
 * Visible In Splunk Web: Yes, for configuration of Inputs
 
@@ -113,7 +113,8 @@ This input will collect the operational run-time configuration of various compon
 # 1.0.5
   * Fix url pagination - [#4](https://github.com/splunk/CitrixCloudAddOnForSplunk/issues/4)
   * Document expected sourcetypes
-
+# 1.0.6
+  * change inputs to allow cron/second input for all inputs
 
 
 
