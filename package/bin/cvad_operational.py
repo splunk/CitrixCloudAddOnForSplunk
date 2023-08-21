@@ -114,11 +114,11 @@ def get_key_correct_case(keys, key):
 def get_proxy_param(proxyDetails):
     try:
         useSocks = False
-        if proxyDetails != None:
+        if proxyDetails is not None:
             if proxyDetails.get("proxy_enabled") == '1':
                 proxyUsername = proxyDetails.get("proxy_username")
                 proxyPassword = proxyDetails.get("proxy_password")
-                if proxyUsername != None:
+                if proxyUsername is not None:
                     useSocks = True
                 proxyUrl = proxyDetails.get("proxy_url")
                 proxyPort = proxyDetails.get("proxy_port")
@@ -148,7 +148,7 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
                 "clientId": clientid,
                 "clientSecret": clientsecret
             }
-            if proxyParam == None:
+            if proxyParam is None:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, json=getTokenBody, timeout=(10.0,60.0))
             else:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, json=getTokenBody, timeout=(10.0,60.0), proxies=proxyParam)
@@ -164,7 +164,7 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
                 "client_secret": clientsecret,
                 "grant_type": "client_credentials"
             }
-            if proxyParam == None:
+            if proxyParam is None:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, data=getTokenBody, timeout=(10.0,60.0))
             else:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, data=getTokenBody, timeout=(10.0,60.0), proxies=proxyParam)
@@ -200,7 +200,7 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, endpoint, token,
         else:
             finalEP = ep
         
-        if re.search("/$", epSourceType) != None: #remove a trailing slash from the sourcetype
+        if re.search("/$", epSourceType) is not None: #remove a trailing slash from the sourcetype
             epSourceType = re.sub("/$", '', epSourceType)
 
         epSourceType = re.sub("/", ":", epSourceType)
@@ -209,7 +209,7 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, endpoint, token,
             #check to see if the endpoint is site and if so add siteid to the url
             getRecordsUrl = "https://api.cloud.com/cvad/manage/{}".format(finalEP)
             
-            if continuationToken != None:
+            if continuationToken is not None:
                 getRecordsUrl = "{}?ContinuationToken={}".format(getRecordsUrl, continuationToken)
 
             getRecordsAuth = "CwsAuth Bearer={}".format(token)
@@ -221,7 +221,7 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, endpoint, token,
                 "Citrix-InstanceId": siteId
             }
 
-            if proxyParam == None:
+            if proxyParam is None:
                 recordsResponse = requests.get(url=getRecordsUrl, headers=getRecordsHeaders, timeout=(10.0,30.0))
             else:
                 recordsResponse = requests.get(url=getRecordsUrl, headers=getRecordsHeaders, timeout=(10.0,30.0), proxies=proxyParam)
@@ -234,7 +234,7 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, endpoint, token,
             getRecordsJSON = recordsResponse.json()
 
             itemsKey = get_key_correct_case(getRecordsJSON.keys(), "items")
-            if itemsKey == None:
+            if itemsKey is None:
                 logger.info("cvad_operational looks like event does not have items, returning raw data")
                 recordEvent = smi.Event()
                 recordEvent.data = json.dumps(getRecordsJSON)
@@ -263,12 +263,12 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, endpoint, token,
                     ew.write_event(recordEvent)
 
             continuationTokenKey = get_key_correct_case(getRecordsJSON.keys(), "continuationToken")
-            if continuationTokenKey != None:
+            if continuationTokenKey is not None:
                 continuationToken = getRecordsJSON[continuationTokenKey]
             else:
                 continuationToken = None
 
-            if continuationToken == None:
+            if continuationToken is None:
                 break
 
 
