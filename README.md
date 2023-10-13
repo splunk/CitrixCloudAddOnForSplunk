@@ -6,7 +6,7 @@ This is the Splunk UCC framework package for the Citrix Cloud Add-on for Splunk.
 # Overview
 ----------
 ## Citrix Cloud Add-on for Splunk
-* Version: 1.0.4
+* Version: 1.1.0
 * Vendor Products: Citrix Cloud
 * Visible In Splunk Web: Yes, for configuration of Inputs
 
@@ -68,6 +68,8 @@ _Note that the Citrix published add-on only supports trust authentication and do
 * Index: the target index for the system logs
 * Account: the Citrix Cloud secure client set up in account details
 * From Start Date: An optional YYYY-MM-DD formatted date from which to begin collection.  This parameter is only used in the event that the kvstore checkpoint for this input is not set.  After the input is run at least once, a checkpoint will be created and used representing the last date and time the data was collected.
+### Expected sourcetype: citrix:system:log:records
+
 
 ## CVAD Config Logs
 This input will collect the Citrix Cloud Config logs for a specific CVAD Site
@@ -77,6 +79,7 @@ This input will collect the Citrix Cloud Config logs for a specific CVAD Site
 * Interval: A static set of collection intervals.  These frequencies are limited to the collection intervals supported by the API endpoint. 
   - There are various risks associated with these settings.  In general - The shorter the collection interval the more likely that data will be missed due to imperfect scheduling. However, the longer delay between collection the less frequently action can be taken on the system logs, but more likely to capture all log entries.
 * Index: the target index for the cvad config logs
+### Expected sourcetype: citrix:cvad:configlog:operations
 
 ## CVAD Operational
 This input will collect the operational run-time configuration of various components of a CVAD deployment.  Unlike the system and config logs, this data capture represents the current state of a site at a given time.  Using this data collection, a detailed history of the site run-time is possible.  This data collection is like a full snapshot of a site configuration, including session state at regular intervals and is extremely powerful for understanding granular site history over time.
@@ -86,6 +89,35 @@ This input will collect the operational run-time configuration of various compon
 * API Endpoints: a multi-select list of CVAD details that wil be collected as part of the input.  Note: it's probable that you will have multiple CVAD operational inputs configured for each site as the various endpoints generally require different collection intervals.  For instance, you may only need machine catalog and application metadata collected once an hour, but session data collected every 30 seconds.  This depends on your reporting requirements.  In this case you would have 2 distinct inputs configured, each with the appropriate API Endpoint and interval.
 * Interval: the amount of time in seconds between gathering of data.
 * Index: the target index for the operational data
+### Expected sourcetypes
+* citrix:cvad:operational:administrators   
+* citrix:cvad:operational:applicationgroups
+* citrix:cvad:operational:applications
+* citrix:cvad:operational:deliverygroups
+* citrix:cvad:operational:hypervisors
+* citrix:cvad:operational:machinecatalogs
+* citrix:cvad:operational:machines
+* citrix:cvad:operational:sessions
+* citrix:cvad:operational:sites
+* citrix:cvad:operational:zones
+
+==========
+# Changelog
+----------
+# 1.0.0
+  * Initial Release
+# 1.0.1
+  * Include proper libraries for scripts
+# 1.0.4
+  * Enhance logging verbosity
+# 1.0.5
+  * Fix url pagination - [#4](https://github.com/splunk/CitrixCloudAddOnForSplunk/issues/4)
+  * Document expected sourcetypes
+# 1.0.6
+  * change inputs to allow cron/second input for all inputs
+# 1.1.0
+  * final update before cloud vetting submission
+
 
 > Copyright 2021 Splunk Inc.
 >

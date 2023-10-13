@@ -114,11 +114,11 @@ def get_key_correct_case(keys, key):
 def get_proxy_param(proxyDetails):
     try:
         useSocks = False
-        if proxyDetails != None:
+        if proxyDetails is not None:
             if proxyDetails.get("proxy_enabled") == '1':
                 proxyUsername = proxyDetails.get("proxy_username")
                 proxyPassword = proxyDetails.get("proxy_password")
-                if proxyUsername != None:
+                if proxyUsername is not None:
                     useSocks = True
                 proxyUrl = proxyDetails.get("proxy_url")
                 proxyPort = proxyDetails.get("proxy_port")
@@ -148,7 +148,7 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
                 "clientId": clientid,
                 "clientSecret": clientsecret
             }
-            if proxyParam == None:
+            if proxyParam is None:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, json=getTokenBody, timeout=(10.0,60.0))
             else:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, json=getTokenBody, timeout=(10.0,60.0), proxies=proxyParam)
@@ -164,7 +164,7 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
                 "client_secret": clientsecret,
                 "grant_type": "client_credentials"
             }
-            if proxyParam == None:
+            if proxyParam is None:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, data=getTokenBody, timeout=(10.0,60.0))
             else:
                 tokenResponse = requests.post(url=getTokenUrl, headers=getTokenHeaders, data=getTokenBody, timeout=(10.0,60.0), proxies=proxyParam)
@@ -189,18 +189,20 @@ def get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam):
         sys.exit(1)
 
 
-def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam):
+#def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam):
+def get_new_records(logger, ew, inputItems, customerid, siteId, token, proxyParam):    
     continuationToken = None
 
     while True:
-        if interval==60: i = "LastMinute"
-        if interval==300: i = "Last5Minutes"
-        if interval==1800: i = "Last30Minutes"
-        if interval==3600: i = "LastHour"
+        # if interval==60: i = "LastMinute"
+        # if interval==300: i = "Last5Minutes"
+        # if interval==1800: i = "Last30Minutes"
+        # if interval==3600: i = "LastHour"
+        i = "Today"
         
         getRecordsUrl = "https://api.cloud.com/cvad/manage/ConfigLog/Operations?searchDateOption={}".format(i)
         
-        if continuationToken != None:
+        if continuationToken is not None:
             getRecordsUrl = "{}&ContinuationToken={}".format(getRecordsUrl, continuationToken)
 
         getRecordsAuth = "CwsAuth Bearer={}".format(token)
@@ -212,7 +214,7 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token,
             "Citrix-InstanceId": siteId
         }
 
-        if proxyParam == None:
+        if proxyParam is None:
             recordsResponse = requests.get(url=getRecordsUrl, headers=getRecordsHeaders, timeout=(10.0,30.0))
         else:
             recordsResponse = requests.get(url=getRecordsUrl, headers=getRecordsHeaders, timeout=(10.0,30.0), proxies=proxyParam)
@@ -242,12 +244,12 @@ def get_new_records(logger, ew, inputItems, customerid, siteId, interval, token,
             ew.write_event(recordEvent)
 
         continuationTokenKey = get_key_correct_case(getRecordsJSON.keys(), "continuationToken")
-        if continuationTokenKey != None:
+        if continuationTokenKey is not None:
             continuationToken = getRecordsJSON[continuationTokenKey]
         else:
             continuationToken = None
 
-        if continuationToken == None:
+        if continuationToken is None:
             break
 
 
@@ -326,11 +328,12 @@ class CVAD_CONFIGLOGS(smi.Script):
         proxyParam = get_proxy_param(proxyDetails)
 
         # get the collection interval to pass to the API
-        interval = int(inputItems.get("interval"))
+        # interval = int(inputItems.get("interval"))
 
         token = get_token(logger, customerid, clientid, clientsecret, authtype, proxyParam)
 
-        get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam)
+        #get_new_records(logger, ew, inputItems, customerid, siteId, interval, token, proxyParam)
+        get_new_records(logger, ew, inputItems, customerid, siteId, token, proxyParam)
 
 
 

@@ -1,2 +1,2 @@
-splunk-add-on-ucc-framework==5.5.5
+splunk-add-on-ucc-framework
 requests[socks]
